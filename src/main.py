@@ -1,8 +1,9 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
+from src.api.v1.bucket.get_all_buckets import router as get_bucket_router
 
 app = FastAPI(title="local-ml-testing", description="Api to handle lambdas and ML interactions")
-app.include_router()
+app.include_router(get_bucket_router)
 
 @app.exception_handler(Exception)
 async def default_exception_handler(request: Request, e: Exception):
@@ -12,5 +13,5 @@ async def default_exception_handler(request: Request, e: Exception):
 def read_root():
     return {
         "app": "Local Machine Learning Flow",
-        "endpoints": [""]
+        "endpoints": ["/bucket/get-all-buckets"]
     }
