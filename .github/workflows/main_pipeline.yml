@@ -1,0 +1,23 @@
+name: main pipeline
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  sonar-task:
+    uses: ./.github/workflows/sonar.yml
+    secrets: inherit
+
+  build-task:
+    needs: sonar-task
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+
+  promote-task:
+    if: github.ref == 'refs/heads/main'
+    needs: build-task
+    uses: ./.github/workflows/promote.yml
+    secrets: inherit

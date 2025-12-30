@@ -1,0 +1,25 @@
+name: promote to github artifactory
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: GitHub container registry login
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/local-ml-flow:latest .
+          docker push ghcr.io/${{ github.repository_owner }}/local-ml-flow:latest
