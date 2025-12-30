@@ -1,2 +1,54 @@
 # local-ml-flow
-Project combining local cloud computing, DevOps and Machine Learning
+
+This project is a combination of the technologies and concepts I want to understand better and improve. 
+
+## Context
+
+This project is a local MLOps Ecosystem designed to automate the machine learning lifecycle using FastAPI, LocalStack (AWS emulation), and a robust GitLab CI/CD pipeline. The goal is to orchestrate data retrieval, model training, and evaluation through serverless functions in a fully containerized environment.
+
+You can find the dataset in /path/housing.csv
+
+## Technical Stack
+
+- Local Stack : local AWS/Cloud computing
+- Python : programming langage
+- SonarQube : code quality
+- GitHub Actions : CI/CD
+
+---
+
+Python dependencies
+- FastAPI : make APIs
+- PyTorch : Machine learning
+- Boto3 : handle cloud computing
+
+## Setup
+
+Clone the repository first : 
+
+```bash
+git clone https://github.com/MathieuAudibert/local-ml-flow.git
+```
+
+```bash
+git clone git@github.com:MathieuAudibert/local-ml-flow.git
+```
+
+Create your Python virtual env : 
+
+```bash
+python -m venv venv
+```
+
+Activate your venv & install dependencies : 
+```bash
+source venv/Scripts/activate or source venv\bin\activate on macos/linux
+pip install -e .
+```
+
+## Contact
+
+| GitHub | email |
+| --- | --- |
+| @MathieuAudibert | mathieu.audibert@edu.devinci.fr |
+

@@ -1,0 +1,31 @@
+[build-system]
+requires=["setuptools", "setuptools-scm"]
+build-backend="setuptools.build_meta"
+
+[project]
+name="Local-ML-Flow"
+version="0.0.0"
+authors=[
+    {name="Mathieu AUDIBERT"}
+]
+readme="README.md"
+requires-python=">=3.10"
+dependencies=[
+    "fastapi[standard]",
+    "python-dotenv",
+    "tox",
+    "pytest",
+    "localstack",
+    "boto3",
+    "torch",
+    "awscli"
+]
+
+[tool.setuptools.packages.find]
+where=["."]
+include=["src*"]
+
+[tool.pytest.ini_options]
+pythonpath=["."]
+
+[tool.setuptools_scm]
