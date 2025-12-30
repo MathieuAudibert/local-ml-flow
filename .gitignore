@@ -1,5 +1,6 @@
 localstack_data
 init-scripts
+.vscode/
 
 .terraform/
 *.tfstate
