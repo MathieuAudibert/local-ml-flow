@@ -1,5 +1,5 @@
 FROM python:3.12-slim
-COPY --from=ghcr.io/astral-sh/uv: latest /uv /bin/uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 LABEL maintainer="MathieuAudibert"
 LABEL contact="mathieu.audibert@edu.devinci.fr"
