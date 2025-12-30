@@ -19,5 +19,5 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/local-ml-flow:latest .
-          docker push ghcr.io/${{ github.repository_owner }}/local-ml-flow:latest
+          docker build -t ghcr.io/mathieuaudibert/local-ml-flow:latest .
+          docker push ghcr.io/mathieuaudibert/local-ml-flow:latest
