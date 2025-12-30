@@ -2,9 +2,9 @@ name: main pipeline
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "main", "develop", "feature/**", "fix/**", "release/**" ]
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "main", "develop", "feature/**", "fix/**", "release/**" ]
 
 jobs:
   sonar-task:
@@ -17,7 +17,7 @@ jobs:
     secrets: inherit
 
   promote-task:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: build-task
     uses: ./.github/workflows/promote.yml
     secrets: inherit
