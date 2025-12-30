@@ -20,5 +20,4 @@ COPY . .
 RUN chown -R ml-flow-user /app
 USER ml-flow-user
 
-RUN localstack start
 CMD ["fastapi", "run", "src/main.py"]
