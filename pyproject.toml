@@ -11,14 +11,18 @@ authors=[
 readme="README.md"
 requires-python=">=3.10"
 dependencies=[
-    "fastapi[standard]",
+    "fastapi",
     "python-dotenv",
-    "tox",
+    "boto3",
+    "torch"
+]
+
+[project.optional-dependencies]
+test = [
     "pytest",
     "pytest-cov",
+    "tox",
     "localstack",
-    "boto3",
-    "torch",
     "awscli"
 ]
 

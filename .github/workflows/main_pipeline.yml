@@ -7,12 +7,22 @@ on:
     branches: [ "main", "develop", "feature/**", "fix/**", "release/**" ]
 
 jobs:
+  clean-runner:
+    run: |
+      sudo rm -rf /usr/share/dotnet
+      sudo rm -rf /usr/local/lib/android
+      sudo rm -rf /opt/ghc
+
+  install-torch-cpu:
+    run: |
+      pip install torch --index-url https://download.pytorch.org/whl/cpu
+
   sonar-task:
     uses: ./.github/workflows/sonar.yml
     secrets: inherit
 
   build-task:
-    needs: sonar-task
+    needs: [sonar-task, clean-runner]
     uses: ./.github/workflows/build.yml
     secrets: inherit
 
