@@ -15,6 +15,7 @@ dependencies=[
     "python-dotenv",
     "tox",
     "pytest",
+    "pytest-cov",
     "localstack",
     "boto3",
     "torch",
