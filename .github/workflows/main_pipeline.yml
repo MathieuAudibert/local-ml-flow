@@ -20,4 +20,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: build-task
     uses: ./.github/workflows/promote.yml
+    permissions:
+      contents: read
+      packages: write
     secrets: inherit
