@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      packages: write # forgot to modify the repo settings
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
