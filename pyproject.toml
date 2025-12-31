@@ -23,7 +23,8 @@ test = [
     "pytest-cov",
     "tox",
     "localstack",
-    "awscli"
+    "awscli",
+    "httpx"
 ]
 
 [tool.setuptools.packages.find]
