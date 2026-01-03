@@ -44,11 +44,24 @@ Create your Python virtual env :
 python -m venv venv
 ```
 
-Activate your venv & install dependencies : 
+You can setup and launch locally with the script in bin/start_all.sh (you will need to create a .env in the root, help yourself w/ .env.example): 
 ```bash
-source venv/Scripts/activate or source venv\bin\activate on macos/linux
-pip install -e .
+./bin/start_all.sh
 ```
+
+## Miscellaneous
+
+* The setup can take some time, I tried optimizing it but torch is quite heavy
+* some files will be created in the filetree with localstack, this is annoying while going throught filetree so create .vscode/settings.json file in the root w/ these values
+```json
+"files.exclude": {
+    "init-scripts": true,
+    "localstack_data": true,
+    "terraform_folder": true
+}
+```
+
+
 
 ## Contact
 
