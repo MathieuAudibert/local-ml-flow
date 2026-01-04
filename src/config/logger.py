@@ -1,7 +1,7 @@
 import logging
 import sys
 
-def get_logger(name: str) -> logging.Logger:
+def get_logger(name: str = "root") -> logging.Logger:
     logger=logging.getLogger(name)
 
     if not logger.handlers:
