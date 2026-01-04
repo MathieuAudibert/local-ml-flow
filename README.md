@@ -23,7 +23,7 @@ You can find the dataset in `src/config/housing.csv`
 
 Python dependencies
 - FastAPI : make APIs
-- PyTorch : Machine learning
+- Scikit-learn : Machine learning
 - Boto3 : handle cloud computing
 
 ## Setup
@@ -49,9 +49,13 @@ You can setup and launch locally with the script in bin/start_all.sh (you will n
 ./bin/start_all.sh
 ```
 
+## Machine learning
+
+This project uses a simple dataset. So we will use simple [linear regression](https://en.wikipedia.org/wiki/Linear_regression)
+
 ## Miscellaneous
 
-* The setup can take some time, I tried optimizing it but torch is quite heavy
+* The setup can take some time, I tried optimizing it but the project's dependencies are quite heavy
 * some files will be created in the filetree with localstack, this is annoying while going throught filetree so create .vscode/settings.json file in the root w/ these values
 ```json
 "files.exclude": {
