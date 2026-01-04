@@ -3,7 +3,7 @@ import boto3
 from dotenv import load_dotenv
 from src.config.logger import get_logger
 
-def _config() -> list:
+def config() -> list:
     logger = get_logger("client configuration")
     load_dotenv()
     logger.info("loaded dotenv, attempting to create AWS clients")
