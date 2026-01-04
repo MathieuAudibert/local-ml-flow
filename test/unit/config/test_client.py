@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from src.config.client import _config
+from src.config.client import config
 
 class TestConfig:
     @patch("src.config.client.get_logger")
@@ -13,7 +13,7 @@ class TestConfig:
         mock_getenv.return_value = "test_value"
         mock_boto_client.return_value = MagicMock()
         
-        result = _config()
+        result = config()
         
         assert isinstance(result, list)
 
@@ -27,7 +27,7 @@ class TestConfig:
         mock_getenv.return_value = "test_value"
         mock_boto_client.return_value = MagicMock()
         
-        result = _config()
+        result = config()
         
         assert len(result) == 2
 
@@ -41,7 +41,7 @@ class TestConfig:
         mock_getenv.return_value = "test_value"
         mock_boto_client.return_value = MagicMock()
         
-        _config()
+        config()
         
         mock_load_dotenv.assert_called_once()
 
@@ -55,7 +55,7 @@ class TestConfig:
         mock_getenv.return_value = "test_value"
         mock_boto_client.return_value = MagicMock()
         
-        _config()
+        config()
         
         calls = mock_boto_client.call_args_list
         s3_call = [call for call in calls if call[0][0] == "s3"]
@@ -71,7 +71,7 @@ class TestConfig:
         mock_getenv.return_value = "test_value"
         mock_boto_client.return_value = MagicMock()
         
-        _config()
+        config()
         
         calls = mock_boto_client.call_args_list
         lambda_call = [call for call in calls if call[0][0] == "lambda"]
@@ -93,7 +93,7 @@ class TestConfig:
         mock_getenv.side_effect = lambda key: env_values.get(key)
         mock_boto_client.return_value = MagicMock()
         
-        _config()
+        config()
         
         assert mock_getenv.call_count >= 4
 
@@ -107,7 +107,7 @@ class TestConfig:
         mock_getenv.return_value = "test_value"
         mock_boto_client.return_value = MagicMock()
         
-        _config()
+        config()
         
         assert mock_logger.info.call_count >= 2
 
@@ -122,7 +122,7 @@ class TestConfig:
         mock_boto_client.side_effect = Exception("Client creation failed")
         
         with pytest.raises(Exception) as exc_info:
-            _config()
+            config()
         
         assert "Client creation failed" in str(exc_info.value)
 
@@ -137,7 +137,7 @@ class TestConfig:
         mock_boto_client.side_effect = Exception("Client creation failed")
         
         with pytest.raises(Exception):
-            _config()
+            config()
         
         mock_logger.error.assert_called_once()
 
@@ -151,6 +151,6 @@ class TestConfig:
         mock_getenv.return_value = "test_value"
         mock_boto_client.return_value = MagicMock()
         
-        _config()
+        config()
         
         mock_get_logger.assert_called_once_with("client configuration")
