@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from fastapi.testclient import TestClient
-from src.api.v1.bucket.get_all_buckets import get_all_buckets
+from src.api.v2.bucket.get_all_buckets import get_all_buckets
 from src.main import app, default_exception_handler
 
 client = TestClient(app)
