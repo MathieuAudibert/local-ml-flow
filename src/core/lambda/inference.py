@@ -1,0 +1,1 @@
+# download the binary, download the test dataset, make the prediction and get the score

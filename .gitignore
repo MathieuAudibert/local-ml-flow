@@ -1,6 +1,9 @@
 localstack_data
 init-scripts
 .vscode/
+terraform/python
+terraform/ingestion.zip
+terraform/ml_layer.zip
 
 .terraform/
 *.tfstate

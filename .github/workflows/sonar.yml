@@ -21,11 +21,11 @@ jobs:
         with:
           python-version: '3.12'
 
-      # INSTALL TORCH CPU SPECIFICALLY (torch is too fat)
+      # INSTALL DEPENDENCIES (too heavy)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e .
           pip install -e ".[test]"
 
       - name: Run tests with coverage
