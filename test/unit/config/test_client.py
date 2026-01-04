@@ -7,7 +7,7 @@ class TestConfig:
     @patch("src.config.client.load_dotenv")
     @patch("src.config.client.boto3.client")
     @patch("src.config.client.os.getenv")
-    def test_config_returns_list(self, mock_getenv, mock_boto_client, mock_load_dotenv, mock_get_logger):
+    def test_config_returns_dict(self, mock_getenv, mock_boto_client, mock_load_dotenv, mock_get_logger):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
         mock_getenv.return_value = "test_value"
@@ -15,7 +15,7 @@ class TestConfig:
         
         result = config()
         
-        assert isinstance(result, list)
+        assert isinstance(result, dict)
 
     @patch("src.config.client.get_logger")
     @patch("src.config.client.load_dotenv")
@@ -153,4 +153,4 @@ class TestConfig:
         
         config()
         
-        mock_get_logger.assert_called_once_with("client configuration")
+        mock_get_logger.assert_called_once_with("client-configuration")

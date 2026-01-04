@@ -7,7 +7,6 @@ from src.core.model.conversion import clean_df
 from src.core.model.train import train
 from src.core.model.save_model import save_model
 
-
 def ingest() -> None:
     logger=get_logger("lambda-ingestion")
     clients = config()
