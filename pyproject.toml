@@ -14,7 +14,9 @@ dependencies=[
     "fastapi",
     "python-dotenv",
     "boto3",
-    "torch"
+    "localstack",
+    "pandas",
+    "scikit-learn"
 ]
 
 [project.optional-dependencies]
@@ -22,7 +24,6 @@ test = [
     "pytest",
     "pytest-cov",
     "tox",
-    "localstack",
     "awscli",
     "httpx"
 ]
