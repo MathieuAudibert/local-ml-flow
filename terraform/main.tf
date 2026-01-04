@@ -1,18 +1,18 @@
 variable "endpoint" {
-    type = string
-    default = "http://localhost:4566"
+  type    = string
+  default = "http://localhost:4566"
 }
 
 variable "access_key" {
-    type = string
+  type = string
 }
 
 variable "secret_key" {
-    type = string
+  type = string
 }
 
 variable "region" {
-    type = string
+  type = string
 }
 
 provider "aws" {
@@ -38,3 +38,34 @@ resource "aws_s3_bucket" "ml_data" {
 resource "aws_s3_bucket" "ml_models" {
   bucket = "local-ml-flow-models"
 }
+
+resource "aws_iam_role" "iam_for_lambda" {
+  name = "iam_for_lambda"
+  assume_role_policy = jsonencode({
+    Version   = "2012-10-17"
+    Statement = [{ Action = "sts:AssumeRole", Effect = "Allow", Principal = { Service = "lambda.amazonaws.com" } }]
+  })
+}
+
+resource "aws_lambda_layer_version" "ml_libs" {
+  filename   = "ml_layer.zip"
+  layer_name = "ml_features_layer"
+
+  compatible_runtimes = ["python3.10"]
+}
+
+resource "aws_lambda_function" "ingestion" {
+  filename      = "ingestion.zip"
+  function_name = "local-ml-flow-ingestion"
+  role          = aws_iam_role.iam_for_lambda.arn
+  handler       = "src.core.lambda.ingestion.handler"
+  runtime       = "python3.10"
+  layers        = [aws_lambda_layer_version.ml_libs.arn]
+  environment {
+    variables = {
+      PYTHONPATH   = "/var/task"
+      endpoint_url = var.endpoint
+    }
+  }
+}
+

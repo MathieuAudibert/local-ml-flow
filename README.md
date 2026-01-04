@@ -10,7 +10,13 @@ This project is a combination of the technologies and concepts I want to underst
 
 This project is a local MLOps Ecosystem designed to automate the machine learning lifecycle using FastAPI, LocalStack (AWS emulation), and a robust GitLab CI/CD pipeline. The goal is to orchestrate data retrieval, model training, and evaluation through serverless functions in a fully containerized environment.
 
-You can find the dataset in `src/config/housing.csv`
+You can find the dataset in `src/config/housing.csv` or on [Kaggle](https://www.kaggle.com/datasets/chandanashwath/housing-dataset?resource=download)
+
+## Requirements 
+
+- [Python](https://www.python.org/downloads/) >= 3.10
+- [Docker engine](https://docs.docker.com/engine/install/)
+- [Terraform](https://www.it-connect.fr/chapitres/terraform-installation-linux-windows-macos/)
 
 ## Technical Stack
 
@@ -23,7 +29,7 @@ You can find the dataset in `src/config/housing.csv`
 
 Python dependencies
 - FastAPI : make APIs
-- PyTorch : Machine learning
+- Scikit-learn : Machine learning
 - Boto3 : handle cloud computing
 
 ## Setup
@@ -44,20 +50,54 @@ Create your Python virtual env :
 python -m venv venv
 ```
 
+You will need then to create the build files required to have the lambdas (will take some time) :
+```bash
+./bin/create_layers.sh
+```
+
 You can setup and launch locally with the script in bin/start_all.sh (you will need to create a .env in the root, help yourself w/ .env.example): 
 ```bash
 ./bin/start_all.sh
 ```
 
+## DevOps 
+
+The project follows this simple workflow : 
+
+![DevOps workflow](/.github/images/devops.png)
+
+## Machine learning
+
+This project uses a simple dataset. So we will use simple [linear regression](https://en.wikipedia.org/wiki/Linear_regression)
+
+The linear regression looks like : $`Price = \beta_0 + \beta_1(area) + \beta_2(bedrooms) + ... + \beta_n(furnishing) + \epsilon(error)`$
+
+Where error is the difference between the predicted price and the actual price
+
+Then, we check the accuracy with the determination coefficient nammed $`R²`$ wich formula is : 
+
+$`R² = 1 - \frac{\sum( y_a - y_p )²}{\sum( y_a - \bar{y} )²}`$ 
+
+Where : 
+- $`y_a`$ (y actual) is the real value of the target variable and $`y_p`$ (y predicted) is predicted by the model
+- $`\bar{y}`$ is the mean of the real values
+
+This ratio gives us the % fof the variance explained by the model
+
+Here is the workflow scheme : 
+
+![workflow scheme, based of off (https://docs.localstack.cloud/aws/tutorials/reproducible-machine-learning-cloud-pods/)](/.github/images/workflow.png)
+
 ## Miscellaneous
 
-* The setup can take some time, I tried optimizing it but torch is quite heavy
+* The setup can take some time, I tried optimizing it but the project's dependencies are quite heavy
 * some files will be created in the filetree with localstack, this is annoying while going throught filetree so create .vscode/settings.json file in the root w/ these values
 ```json
 "files.exclude": {
     "localstack_data": true
 }
 ```
+* make sure to modify the scripts in /bin based on your distribution (replace powershell with zip etc...)
 
 ## Contact
 
