@@ -14,7 +14,7 @@ You can find the dataset in `src/config/housing.csv` or on [Kaggle](https://www.
 
 ## Requirements 
 
-- [Python](https://www.python.org/downloads/) >= 3.10
+- [Python](https://www.python.org/downloads/) $`\geq`$ 3.10
 - [Docker engine](https://docs.docker.com/engine/install/)
 - [Terraform](https://www.it-connect.fr/chapitres/terraform-installation-linux-windows-macos/)
 
