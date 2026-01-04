@@ -12,6 +12,12 @@ This project is a local MLOps Ecosystem designed to automate the machine learnin
 
 You can find the dataset in `src/config/housing.csv`
 
+## Requirements 
+
+- [Python](https://www.python.org/downloads/) >= 3.10
+- [Docker engine](https://docs.docker.com/engine/install/)
+- [Terraform](https://www.it-connect.fr/chapitres/terraform-installation-linux-windows-macos/)
+
 ## Technical Stack
 
 - Local Stack : local AWS/Cloud computing
