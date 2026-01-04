@@ -69,6 +69,16 @@ The linear regression looks like : $`Price = \beta_0 + \beta_1(area) + \beta_2(b
 
 Where error is the difference between the predicted price and the actual price
 
+Then, we check the accuracy with the determination coefficient nammed $`R²`$ wich formula is : 
+
+$`R² = 1 - \frac{\sum(y_actual - y_predicted)²}{\sum(y_actual- \bar{y})²}`$ 
+
+Where : 
+- $`y_actual`$ is the real value of the target variable and $`y_predicted`$ is predicted by the model
+- $`\bar{y}`$ is the mean of the real values
+
+This ratio gives us the % fof the variance explained by the model
+
 Here is the workflow scheme : 
 
 ![workflow scheme, based of off (https://docs.localstack.cloud/aws/tutorials/reproducible-machine-learning-cloud-pods/)](/.github/images/workflow.png)
