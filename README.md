@@ -50,6 +50,11 @@ Create your Python virtual env :
 python -m venv venv
 ```
 
+You will need then to create the build files required to have the lambdas (will take some time) :
+```bash
+./bin/create_layers.sh
+```
+
 You can setup and launch locally with the script in bin/start_all.sh (you will need to create a .env in the root, help yourself w/ .env.example): 
 ```bash
 ./bin/start_all.sh
@@ -92,6 +97,7 @@ Here is the workflow scheme :
     "localstack_data": true
 }
 ```
+* make sure to modify the scripts in /bin based on your distribution (replace powershell with zip etc...)
 
 ## Contact
 
