@@ -10,7 +10,7 @@ This project is a combination of the technologies and concepts I want to underst
 
 This project is a local MLOps Ecosystem designed to automate the machine learning lifecycle using FastAPI, LocalStack (AWS emulation), and a robust GitLab CI/CD pipeline. The goal is to orchestrate data retrieval, model training, and evaluation through serverless functions in a fully containerized environment.
 
-You can find the dataset in src/config/housing.csv
+You can find the dataset in `src/config/housing.csv`
 
 ## Technical Stack
 
@@ -55,13 +55,9 @@ You can setup and launch locally with the script in bin/start_all.sh (you will n
 * some files will be created in the filetree with localstack, this is annoying while going throught filetree so create .vscode/settings.json file in the root w/ these values
 ```json
 "files.exclude": {
-    "init-scripts": true,
-    "localstack_data": true,
-    "terraform_folder": true
+    "localstack_data": true
 }
 ```
-
-
 
 ## Contact
 
