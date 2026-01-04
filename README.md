@@ -53,6 +53,14 @@ You can setup and launch locally with the script in bin/start_all.sh (you will n
 
 This project uses a simple dataset. So we will use simple [linear regression](https://en.wikipedia.org/wiki/Linear_regression)
 
+The linear regression looks like : $`Price = \beta_0 + \beta_1(area) + \beta_2(bedrooms) + ... + \beta_n(furnishing) + \epsilon(error)`$
+
+Where error is the difference between the predicted price and the actual price
+
+Here is the workflow scheme : 
+
+![workflow scheme, based of off (https://docs.localstack.cloud/aws/tutorials/reproducible-machine-learning-cloud-pods/)](/.github/images/workflow.png)
+
 ## Miscellaneous
 
 * The setup can take some time, I tried optimizing it but the project's dependencies are quite heavy
