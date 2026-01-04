@@ -58,7 +58,7 @@ resource "aws_lambda_function" "ingestion" {
   filename      = "ingestion.zip"
   function_name = "local-ml-flow-ingestion"
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "src.core.lambda.ingestion.handler"
+  handler       = "src.core.lambdas.ingestion.handler"
   runtime       = "python3.10"
   layers        = [aws_lambda_layer_version.ml_libs.arn]
   environment {
