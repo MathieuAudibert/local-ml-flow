@@ -49,6 +49,12 @@ You can setup and launch locally with the script in bin/start_all.sh (you will n
 ./bin/start_all.sh
 ```
 
+## DevOps 
+
+The project follows this simple workflow : 
+
+![DevOps workflow](/.github/images/devops.png)
+
 ## Machine learning
 
 This project uses a simple dataset. So we will use simple [linear regression](https://en.wikipedia.org/wiki/Linear_regression)
