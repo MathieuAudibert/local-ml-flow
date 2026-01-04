@@ -18,7 +18,7 @@ class TestReadRoot:
 
 class TestDefaultExceptionHandler:
     def test_exception_handler_returns_500(self):
-        with patch("src.api.v1.bucket.get_all_buckets.boto3.client") as mock_client:
+        with patch("src.api.v2.bucket.get_all_buckets.boto3.client") as mock_client:
             mock_s3 = MagicMock()
             mock_client.return_value = mock_s3
             mock_s3.list_buckets.side_effect = Exception("Test error")
@@ -29,7 +29,7 @@ class TestDefaultExceptionHandler:
 
 
 class TestGetAllBuckets:
-    @patch("src.api.v1.bucket.get_all_buckets.boto3.client")
+    @patch("src.api.v2.bucket.get_all_buckets.boto3.client")
     def test_get_all_buckets_returns_bucket_list(self, mock_boto_client):
         mock_s3 = MagicMock()
         mock_boto_client.return_value = mock_s3
@@ -46,7 +46,7 @@ class TestGetAllBuckets:
         assert response.status_code == 200
         assert response.json() == {"buckets": ["bucket1", "bucket2", "bucket3"]}
 
-    @patch("src.api.v1.bucket.get_all_buckets.boto3.client")
+    @patch("src.api.v2.bucket.get_all_buckets.boto3.client")
     def test_get_all_buckets_returns_empty_list(self, mock_boto_client):
         mock_s3 = MagicMock()
         mock_boto_client.return_value = mock_s3
@@ -57,7 +57,7 @@ class TestGetAllBuckets:
         assert response.status_code == 200
         assert response.json() == {"buckets": []}
 
-    @patch("src.api.v1.bucket.get_all_buckets.boto3.client")
+    @patch("src.api.v2.bucket.get_all_buckets.boto3.client")
     def test_get_all_buckets_handles_missing_buckets_key(self, mock_boto_client):
         mock_s3 = MagicMock()
         mock_boto_client.return_value = mock_s3
@@ -68,8 +68,8 @@ class TestGetAllBuckets:
         assert response.status_code == 200
         assert response.json() == {"buckets": []}
 
-    @patch("src.api.v1.bucket.get_all_buckets.os.getenv")
-    @patch("src.api.v1.bucket.get_all_buckets.boto3.client")
+    @patch("src.api.v2.bucket.get_all_buckets.os.getenv")
+    @patch("src.api.v2.bucket.get_all_buckets.boto3.client")
     def test_get_all_buckets_uses_environment_variables(self, mock_boto_client, mock_getenv):
         mock_s3 = MagicMock()
         mock_boto_client.return_value = mock_s3
@@ -87,7 +87,7 @@ class TestGetAllBuckets:
         
         assert response.status_code == 200
 
-    @patch("src.api.v1.bucket.get_all_buckets.boto3.client")
+    @patch("src.api.v2.bucket.get_all_buckets.boto3.client")
     def test_get_all_buckets_single_bucket(self, mock_boto_client):
         mock_s3 = MagicMock()
         mock_boto_client.return_value = mock_s3
