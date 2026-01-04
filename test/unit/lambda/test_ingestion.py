@@ -139,7 +139,7 @@ class TestIngest:
         
         ingest()
         
-        mock_get_logger.assert_called_with("lambdas-ingestion")
+        mock_get_logger.assert_called_with("lambda-ingestion")
         assert mock_logger.info.call_count >= 4
 
     @patch("src.core.lambdas.ingestion.config")
