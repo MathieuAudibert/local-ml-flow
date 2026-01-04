@@ -76,7 +76,7 @@ Where error is the difference between the predicted price and the actual price
 
 Then, we check the accuracy with the determination coefficient nammed $`R²`$ wich formula is : 
 
-$`R² = 1 - \frac{\sum(y_actual - y_predicted)²}{\sum(y_actual- \bar{y})²}`$ 
+$`R² = 1 - \frac{\sum( y_actual - y_predicted )²}{\sum( y_actual - \bar{y} )²}`$ 
 
 Where : 
 - $`y_actual`$ is the real value of the target variable and $`y_predicted`$ is predicted by the model
