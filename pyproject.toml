@@ -16,7 +16,9 @@ dependencies=[
     "boto3",
     "localstack",
     "pandas",
-    "scikit-learn"
+    "scikit-learn",
+    "numpy",
+    "matplotplib"
 ]
 
 [project.optional-dependencies]
