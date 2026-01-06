@@ -99,7 +99,8 @@ Here is the workflow scheme :
 ```json
 "files.exclude": {
     "localstack_data": true,
-    #This is not necessary, but it's quite practical
+    
+    This is not necessary, but it's quite practical
     "/pycache": true,
     ".pytest_cache": true,
     "**.egg-info/": true,
