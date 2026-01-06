@@ -16,7 +16,6 @@ You can find the dataset in `src/config/housing.csv` or on [Kaggle](https://www.
 
 - [Python](https://www.python.org/downloads/) $`\geq`$ 3.10
 - [Docker engine](https://docs.docker.com/engine/install/)
-- [Terraform](https://www.it-connect.fr/chapitres/terraform-installation-linux-windows-macos/)
 
 ## Technical Stack
 
@@ -60,7 +59,7 @@ You can setup and launch locally with the script in bin/start_all.sh (you will n
 ./bin/start_all.sh
 ```
 
-You can then open the endpoint running on (localhost:8080)[http://localhost:8080] and navigate throught the endpoints 🚀
+You can then open the endpoint running on <u>http://localhost:8000</u> and navigate throught the endpoints 🚀
 
 ## DevOps 
 
@@ -99,7 +98,7 @@ Here is the workflow scheme :
 ```json
 "files.exclude": {
     "localstack_data": true,
-    
+
     This is not necessary, but it's quite practical
     "/pycache": true,
     ".pytest_cache": true,

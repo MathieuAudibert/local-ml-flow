@@ -12,9 +12,13 @@ services:
       - DEBUG=1
       - PERSISTENCE=1
       - AWS_DEFAULT_REGION=us-east-1
+      - LAMBDA_EXECUTOR=docker
+      - LAMBDA_DOCKER_NETWORK=local-ml-flow_default
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LAMBDA_REMOTE_DOCKER=0
     volumes:
       - "./localstack_data:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./src/config/housing.csv:/tmp/data/housing.csv"
       - "./bin/init:/etc/localstack/init/ready.d"
-      - "./terraform:/etc/localstack/init/terraform"
+      - "./terraform:/opt/code/terraform"

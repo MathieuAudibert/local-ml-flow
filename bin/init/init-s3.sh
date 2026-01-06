@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "localstack hook, starting terraform"
-cd /etc/localstack/init/terraform
+cd /opt/code/terraform
 
 terraform init
 terraform apply -var-file="terraform.tfvars" -auto-approve

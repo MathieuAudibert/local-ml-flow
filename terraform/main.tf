@@ -60,6 +60,8 @@ resource "aws_lambda_function" "ingestion" {
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "src.core.lambdas.ingestion.handler"
   runtime       = "python3.10"
+  timeout       = 300
+  memory_size   = 512
   layers        = [aws_lambda_layer_version.ml_libs.arn]
   environment {
     variables = {
@@ -75,6 +77,8 @@ resource "aws_lambda_function" "inference" {
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "src.core.lambdas.inference.handler"
   runtime       = "python3.10"
+  timeout       = 300
+  memory_size   = 512
   layers        = [aws_lambda_layer_version.ml_libs.arn]
   environment {
     variables = {

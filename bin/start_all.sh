@@ -1,5 +1,6 @@
 #!/bin/bash
 # this file is to run the project locally, you might wanna change some things there to match your config
+set -e
 
 echo "****************** starting virtual env ******************"
 source venv/Scripts/activate
@@ -34,10 +35,22 @@ until docker exec localstack-main awslocal lambda list-functions >/dev/null 2>&1
 done
 
 echo "****************** applying the aws lambdas ******************"
-echo "ingestion lambda"
+echo "waiting for ingestion lambda to be active..."
+until aws --endpoint-url=http://localhost:4566 lambda get-function --function-name local-ml-flow-ingestion >/dev/null 2>&1; do
+  echo "still waiting for ingestion lambda..."
+  sleep 2
+done
+
+echo "invoking ingestion lambda..."
 aws --endpoint-url=http://localhost:4566 lambda invoke --function-name local-ml-flow-ingestion terraform/logs/output.txt
 
-echo "inference lambda"
+echo "waiting for inference lambda to be active..."
+until aws --endpoint-url=http://localhost:4566 lambda get-function --function-name local-ml-flow-inference >/dev/null 2>&1; do
+  echo "still waiting for inference lambda..."
+  sleep 2
+done
+
+echo "invoking inference lambda..."
 aws --endpoint-url=http://localhost:4566 lambda invoke --function-name local-ml-flow-inference terraform/logs/output.txt
 
 echo "******************************************************"
