@@ -21,4 +21,4 @@ echo "compressing lambdas..."
 powershell.exe -Command "Compress-Archive -Path src -DestinationPath terraform/ingestion.zip -Force"
 powershell.exe -Command "Compress-Archive -Path src -DestinationPath terraform/inference.zip -Force"
 
-#rm -rf build_layer
+rm -rf build_layer
