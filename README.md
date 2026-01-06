@@ -70,7 +70,9 @@ The project follows this simple workflow :
 
 This project uses a simple dataset. So we will use simple [linear regression](https://en.wikipedia.org/wiki/Linear_regression)
 
-The linear regression looks like : $`Price = \beta_0 + \beta_1(area) + \beta_2(bedrooms) + ... + \beta_n(furnishing) + \epsilon(error)`$
+The basic linear regression formula is : $`y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \dots + \beta_nx_n + \epsilon`$
+
+Now transposed to my project : $`Price = \beta_0 + \beta_1(area) + \beta_2(bedrooms) + \dots + \beta_n(furnishing) + \epsilon(error)`$
 
 Where error is the difference between the predicted price and the actual price
 
