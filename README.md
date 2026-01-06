@@ -60,6 +60,8 @@ You can setup and launch locally with the script in bin/start_all.sh (you will n
 ./bin/start_all.sh
 ```
 
+You can then open the endpoint running on (localhost:8080)[http://localhost:8080] and navigate throught the endpoints 🚀
+
 ## DevOps 
 
 The project follows this simple workflow : 
@@ -92,14 +94,27 @@ Here is the workflow scheme :
 
 ## Miscellaneous
 
-* The setup can take some time, I tried optimizing it but the project's dependencies are quite heavy
+* The setup can take some time, I tried optimizing it but the project's dependencies AND the lambdas are quite heavy
 * some files will be created in the filetree with localstack, this is annoying while going throught filetree so create .vscode/settings.json file in the root w/ these values
 ```json
 "files.exclude": {
-    "localstack_data": true
+    "localstack_data": true,
+    #This is not necessary, but it's quite practical
+    "/pycache": true,
+    ".pytest_cache": true,
+    "**.egg-info/": true,
+    "**/__pycache__/": true
 }
 ```
 * make sure to modify the scripts in /bin based on your distribution (replace powershell with zip etc...)
+
+## Future
+
+In the future I would like to : 
+* Implement a deeper ML/DL algorithm w/ more parameters
+* Find a better solutions for lambdas, decompressing and recompressing through powershell is SLOW
+* Go deeper w/ localstack
+* Implement K8S & ArgoCD
 
 ## Contact
 
