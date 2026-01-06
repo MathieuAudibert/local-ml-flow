@@ -107,6 +107,7 @@ Here is the workflow scheme :
 }
 ```
 * make sure to modify the scripts in /bin based on your distribution (replace powershell with zip etc...)
+* If something breaks w/ the lambdas you can find the log in [terraform/logs/output.txt](terraform/logs/)
 
 ## Future
 

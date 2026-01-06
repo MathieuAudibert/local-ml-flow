@@ -69,3 +69,17 @@ resource "aws_lambda_function" "ingestion" {
   }
 }
 
+resource "aws_lambda_function" "inference" {
+  filename      = "inference.zip"
+  function_name = "local-ml-flow-inference"
+  role          = aws_iam_role.iam_for_lambda.arn
+  handler       = "src.core.lambdas.inference.handler"
+  runtime       = "python3.10"
+  layers        = [aws_lambda_layer_version.ml_libs.arn]
+  environment {
+    variables = {
+      PYTHONPATH   = "/var/task"
+      endpoint_url = var.endpoint
+    }
+  }
+}
