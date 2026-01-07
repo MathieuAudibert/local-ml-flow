@@ -3,7 +3,6 @@ init-scripts
 .vscode/
 terraform/python
 terraform/ingestion.zip
-terraform/ml_layer.zip
 terraform/inference.zip
 terraform/logs/output.txt
 
@@ -24,7 +23,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
-build_layer/
 develop-eggs/
 dist/
 downloads/

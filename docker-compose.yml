@@ -16,6 +16,10 @@ services:
       - LAMBDA_DOCKER_NETWORK=local-ml-flow_default
       - DOCKER_HOST=unix:///var/run/docker.sock
       - LAMBDA_REMOTE_DOCKER=0
+      - LAMBDA_LIMITS_CREATE_FUNCTION_REQUEST_SIZE=256000000
+      - LAMBDA_LIMITS_CREATE_FUNCTION_REQUEST_SIZE=256000000
+      - LAMBDA_LIMITS_CODE_SIZE_ZIPPED=256000000
+      - LAMBDA_LIMITS_CODE_SIZE_UNZIPPED=512000000
     volumes:
       - "./localstack_data:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"

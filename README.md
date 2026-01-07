@@ -49,11 +49,6 @@ Create your Python virtual env :
 python -m venv venv
 ```
 
-You will need then to create the build files required to have the lambdas (will take some time) :
-```bash
-./bin/create_layers.sh
-```
-
 You can setup and launch locally with the script in bin/start_all.sh (you will need to create a .env in the root, help yourself w/ .env.example): 
 ```bash
 ./bin/start_all.sh
@@ -114,6 +109,7 @@ Here is the workflow scheme :
 In the future I would like to : 
 * Implement a deeper ML/DL algorithm w/ more parameters
 * Find a better solutions for lambdas, decompressing and recompressing through powershell is SLOW
+* Making a dockerfile for lambdas is also a disgusting way to bypass the file limit
 * Go deeper w/ localstack
 * Implement K8S & ArgoCD
 

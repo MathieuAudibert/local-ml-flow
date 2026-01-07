@@ -39,6 +39,18 @@ resource "aws_s3_bucket" "ml_models" {
   bucket = "local-ml-flow-models"
 }
 
+resource "aws_s3_object" "lambda_ingestion_zip" {
+  bucket = aws_s3_bucket.ml_data.id
+  key    = "ingestion.zip"
+  source = "ingestion.zip"
+}
+
+resource "aws_s3_object" "lambda_inference_zip" {
+  bucket = aws_s3_bucket.ml_data.id
+  key    = "inference.zip"
+  source = "inference.zip"
+}
+
 resource "aws_iam_role" "iam_for_lambda" {
   name = "iam_for_lambda"
   assume_role_policy = jsonencode({
@@ -47,22 +59,16 @@ resource "aws_iam_role" "iam_for_lambda" {
   })
 }
 
-resource "aws_lambda_layer_version" "ml_libs" {
-  filename   = "ml_layer.zip"
-  layer_name = "ml_features_layer"
-
-  compatible_runtimes = ["python3.10"]
-}
-
 resource "aws_lambda_function" "ingestion" {
-  filename      = "ingestion.zip"
-  function_name = "local-ml-flow-ingestion"
-  role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "src.core.lambdas.ingestion.handler"
-  runtime       = "python3.10"
-  timeout       = 300
-  memory_size   = 512
-  layers        = [aws_lambda_layer_version.ml_libs.arn]
+  s3_bucket        = aws_s3_bucket.ml_data.id
+  s3_key           = aws_s3_object.lambda_ingestion_zip.key
+  function_name    = "local-ml-flow-ingestion"
+  role             = aws_iam_role.iam_for_lambda.arn
+  handler          = "src.core.lambdas.ingestion.handler"
+  runtime          = "python3.10"
+  timeout          = 300
+  source_code_hash = filebase64sha256("ingestion.zip")
+
   environment {
     variables = {
       PYTHONPATH   = "/var/task"
@@ -72,14 +78,15 @@ resource "aws_lambda_function" "ingestion" {
 }
 
 resource "aws_lambda_function" "inference" {
-  filename      = "inference.zip"
-  function_name = "local-ml-flow-inference"
-  role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "src.core.lambdas.inference.handler"
-  runtime       = "python3.10"
-  timeout       = 300
-  memory_size   = 512
-  layers        = [aws_lambda_layer_version.ml_libs.arn]
+  s3_bucket        = aws_s3_bucket.ml_data.id
+  s3_key           = aws_s3_object.lambda_inference_zip.key
+  function_name    = "local-ml-flow-inference"
+  role             = aws_iam_role.iam_for_lambda.arn
+  handler          = "src.core.lambdas.inference.handler"
+  runtime          = "python3.10"
+  timeout          = 300
+  source_code_hash = filebase64sha256("inference.zip")
+
   environment {
     variables = {
       PYTHONPATH   = "/var/task"

@@ -15,7 +15,7 @@ if ! docker info >/dev/null 2>&1; then
 fi
 
 echo "****************** building terraform lambdas ******************"
-./bin/create_layers.sh
+./bin/build_image.sh
 
 echo "****************** starting localstack ******************"
 docker compose up -d --build
