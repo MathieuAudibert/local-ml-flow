@@ -58,7 +58,7 @@ def ingest() -> None:
 def handler(event, context) -> dict:
     try:
         ingest()
-        return {"statuscode": 200, "body": "success"}
+        return {"statusCode": 200, "body": "success"}
 
     except Exception as e:
-        return {"statuscode": 500, "body": str(e)}
+        return {"statusCode": 500, "body": str(e)}
