@@ -58,9 +58,29 @@ You can then open the endpoint running on <u>http://localhost:8000</u> and navig
 
 ## DevOps 
 
-The project follows this simple workflow : 
+The project follows this simple CI/CD workflow : 
 
-![DevOps workflow](/.github/images/devops.png)
+```mermaid
+graph TB;
+    A[Push/PR Event] --> B{Branch Check};
+    B -->|Any Branch| C[Sonar Task];
+    C --> D[Code Quality Analysis];
+    D --> E[Build Task];
+    E --> F[Set up Docker Buildx];
+    F --> G[Build Docker Image];
+    G --> H{On Main Branch?};
+    H -->|Yes| I[Promote Task];
+    H -->|No| Z[End];
+    I --> J[GitHub Container Registry Login];
+    J --> K[Build & Push to ghcr.io];
+    K --> Z[End];
+
+    style A fill:#e1f5ff;
+    style C fill:#fff4e1;
+    style E fill:#fff4e1;
+    style I fill:#e8f5e9;
+    style Z fill:#f3f3f3;
+```
 
 ## Machine learning
 
@@ -84,7 +104,120 @@ This ratio gives us the % fof the variance explained by the model
 
 Here is the workflow scheme : 
 
-![workflow scheme, based of off (https://docs.localstack.cloud/aws/tutorials/reproducible-machine-learning-cloud-pods/)](/.github/images/workflow.png)
+```mermaid
+graph TB
+    Start([API Request]) --> Invoke1[Invoke Ingestion Lambda]
+    
+    subgraph Ingestion["Ingestion Lambda"]
+        I1[Get housing.csv from S3]
+        I2[Clean Dataset<br/>yes/no → 1/0]
+        I3[Train/Test Split]
+        I4[Train ML Model<br/>Linear Regression]
+        I5[Save model.joblib to S3]
+        I6[Save x_test.joblib to S3]
+        I7[Save y_test.joblib to S3]
+        
+        I1 --> I2 --> I3 --> I4 --> I5
+        I4 --> I6 --> I7
+    end
+    
+    Invoke1 --> I1
+    I7 --> Invoke2[Invoke Inference Lambda]
+    
+    subgraph Inference["Inference Lambda"]
+        IN1[Get model.joblib from S3]
+        IN2[Get x_test.joblib from S3]
+        IN3[Get y_test.joblib from S3]
+        IN4[Make Predictions]
+        IN5[Calculate R² Score]
+        IN6[Save score.txt to S3]
+        
+        IN1 --> IN4
+        IN2 --> IN4
+        IN3 --> IN4
+        IN4 --> IN5 --> IN6
+    end
+    
+    Invoke2 --> IN1
+    IN6 --> API[FastAPI Endpoints]
+    
+    subgraph FastAPI["FastAPI Server"]
+        EP1["/bucket/get-all-models"]
+        EP2["/result/local-ml-flow-data"]
+        EP3["/bucket/dataset"]
+        EP4["/lambda/get-all-lambdas"]
+    end
+    
+    API --> FastAPI
+    
+    subgraph S3["S3 Buckets"]
+        B1[(local-ml-flow-data<br/>housing.csv<br/>x_test.joblib<br/>y_test.joblib<br/>score.txt)]
+        B2[(local-ml-flow-models<br/>model.joblib)]
+    end
+    
+    I1 -.read.- B1
+    I5 -.write.- B2
+    I6 -.write.- B1
+    I7 -.write.- B1
+    IN1 -.read.- B2
+    IN2 -.read.- B1
+    IN3 -.read.- B1
+    IN6 -.write.- B1
+    FastAPI -.read.- B1
+    FastAPI -.read.- B2
+
+    style Start fill:#e1f5ff
+    style Ingestion fill:#fff4e1
+    style Inference fill:#e8f5e9
+    style FastAPI fill:#f3e5f5
+    style S3 fill:#fce4ec
+```
+
+And here is the *complete* workflow :
+
+```mermaid
+graph TB
+    User[User/Developer] -->|git push| GH[GitHub Repository]
+    
+    subgraph CI/CD["GitHub Actions Pipeline"]
+        GH --> Sonar[SonarCloud Analysis]
+        Sonar --> Build[Build Docker Image]
+        Build --> Promote{Main Branch?}
+        Promote -->|Yes| GHCR[Push to ghcr.io]
+        Promote -->|No| End1[Skip Promote]
+    end
+    
+    Dev[Local Development] -->|docker compose up| LS[LocalStack Container]
+    
+    subgraph LocalEnv["Local Environment"]
+        LS --> TF[Terraform Init]
+        TF --> S3Buckets[Create S3 Buckets]
+        TF --> LambdaDeploy[Deploy Lambdas]
+        TF --> Upload[Upload housing.csv]
+        
+        LambdaDeploy --> L1[Ingestion Lambda]
+        LambdaDeploy --> L2[Inference Lambda]
+        
+        Upload --> S3Data[(S3: local-ml-flow-data)]
+        L1 -->|train & save| S3Models[(S3: local-ml-flow-models)]
+        L1 -->|save test data| S3Data
+        L2 -->|read model| S3Models
+        L2 -->|read test data| S3Data
+        L2 -->|save score| S3Data
+        
+        FastAPI[FastAPI Server:8000] -->|read| S3Data
+        FastAPI -->|read| S3Models
+        FastAPI -->|invoke| L1
+        FastAPI -->|invoke| L2
+    end
+    
+    User -->|http://localhost:8000| FastAPI
+
+    style CI/CD fill:#e3f2fd
+    style LocalEnv fill:#f1f8e9
+    style User fill:#fce4ec
+    style FastAPI fill:#f3e5f5
+```
 
 ## Miscellaneous
 
@@ -101,15 +234,16 @@ Here is the workflow scheme :
     "**/__pycache__/": true
 }
 ```
-* make sure to modify the scripts in /bin based on your distribution (replace powershell with zip etc...)
+* make sure to modify the scripts in /bin based on your distribution
 * If something breaks w/ the lambdas you can find the log in [terraform/logs/output.txt](terraform/logs/)
+* the determination coefficient is ridiculously low (35%)
 
 ## Future
 
 In the future I would like to : 
 * Implement a deeper ML/DL algorithm w/ more parameters
-* Find a better solutions for lambdas, decompressing and recompressing through powershell is SLOW
-* Making a dockerfile for lambdas is also a disgusting way to bypass the file limit
+* Find a better solutions for lambdas
+* Making a dockerfile for lambdas is a disgusting way to bypass the file limit
 * Go deeper w/ localstack
 * Implement K8S & ArgoCD
 
