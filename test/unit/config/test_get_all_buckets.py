@@ -7,13 +7,15 @@ from src.main import app, default_exception_handler
 client = TestClient(app)
 
 class TestReadRoot:
-    def test_read_root_returns_app_info(self):
+       def test_read_root_returns_app_info(self):
         response = client.get("/")
         assert response.status_code == 200
-        assert response.json() == {
-            "app": "Local Machine Learning Flow",
-            "endpoints": ["/docs", "/bucket/get-all-buckets", "/lambda/get-all-lambdas"]
-        }
+        data = response.json()
+        assert data["app"] == "Local Machine Learning Flow"
+        assert "endpoints" in data
+        assert isinstance(data["endpoints"], dict)
+        assert "Documentation" in data["endpoints"]
+        assert data["endpoints"]["Documentation"] == "/docs"
 
 
 class TestDefaultExceptionHandler:

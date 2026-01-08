@@ -18,6 +18,7 @@ def split(dataset: pd.DataFrame) -> tuple:
 
     except Exception as e:
         logger.error(f"error while splitting train and tests - {e}")
+        raise
     
     logger.info("attempting to normalise caracteristics")
     scaler = StandardScaler()

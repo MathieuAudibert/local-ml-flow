@@ -165,7 +165,7 @@ class TestHandler:
         
         result = handler({}, {})
         
-        assert result["statuscode"] == 200
+        assert result["statusCode"] == 200
         assert result["body"] == "success"
 
     @patch("src.core.lambdas.ingestion.ingest")
@@ -182,7 +182,7 @@ class TestHandler:
         
         result = handler({}, {})
         
-        assert result["statuscode"] == 500
+        assert result["statusCode"] == 500
         assert "Ingest error" in result["body"]
 
     @patch("src.core.lambdas.ingestion.ingest")
@@ -193,4 +193,4 @@ class TestHandler:
         
         result = handler(event, context)
         
-        assert result["statuscode"] == 200
+        assert result["statusCode"] == 200

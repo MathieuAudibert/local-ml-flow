@@ -21,7 +21,7 @@ class TestTrain:
         })
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.split")
+    @patch("src.core.model.train.train_test_split.split")
     def test_train_returns_linear_regression_model(self, mock_split, mock_get_logger, sample_dataset):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
@@ -37,7 +37,7 @@ class TestTrain:
         assert isinstance(result, LinearRegression)
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.split")
+    @patch("src.core.model.train.train_test_split.split")
     def test_train_calls_split(self, mock_split, mock_get_logger, sample_dataset):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
@@ -53,7 +53,7 @@ class TestTrain:
         mock_split.assert_called_once_with(dataset=sample_dataset)
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.split")
+    @patch("src.core.model.train.train_test_split.split")
     def test_train_logs_info_messages(self, mock_split, mock_get_logger, sample_dataset):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
@@ -70,7 +70,7 @@ class TestTrain:
         assert mock_logger.info.call_count >= 2
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.split")
+    @patch("src.core.model.train.train_test_split.split")
     def test_train_handles_exception(self, mock_split, mock_get_logger, sample_dataset):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
@@ -82,7 +82,7 @@ class TestTrain:
         assert "Split error" in str(exc_info.value)
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.split")
+    @patch("src.core.model.train.train_test_split.split")
     def test_train_model_is_fitted(self, mock_split, mock_get_logger, sample_dataset):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
@@ -101,7 +101,7 @@ class TestTrain:
         assert len(model.coef_) == 6
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.split")
+    @patch("src.core.model.train.train_test_split.split")
     def test_train_logs_error_on_fit_failure(self, mock_split, mock_get_logger, sample_dataset):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
