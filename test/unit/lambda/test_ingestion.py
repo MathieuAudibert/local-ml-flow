@@ -1,8 +1,9 @@
 import pytest
 import pandas as pd
+import numpy as np
 import io
 from unittest.mock import patch, MagicMock
-from src.core.lambdas.ingestion import ingest, handler
+from src.core.lambdas.ingestion import ingest, handler, save_test_data
 
 class TestIngest:
     @pytest.fixture
@@ -156,6 +157,31 @@ class TestIngest:
         
         assert "S3 error" in str(exc_info.value)
         mock_logger.error.assert_called_once()
+
+
+class TestSaveTestData:
+    def test_save_test_data_saves_both_files(self):
+        mock_s3 = MagicMock()
+        x_test = np.array([[1, 2, 3], [4, 5, 6]])
+        y_test = np.array([100, 200])
+        
+        save_test_data(mock_s3, x_test, y_test)
+        
+        assert mock_s3.put_object.call_count == 2
+        calls = mock_s3.put_object.call_args_list
+        assert calls[0][1]["Bucket"] == "local-ml-flow-data"
+        assert calls[0][1]["Key"] == "x_test.joblib"
+        assert calls[1][1]["Bucket"] == "local-ml-flow-data"
+        assert calls[1][1]["Key"] == "y_test.joblib"
+
+    def test_save_test_data_calls_with_correct_data(self):
+        mock_s3 = MagicMock()
+        x_test = np.array([[1, 0], [0, 1]])
+        y_test = np.array([50, 60])
+        
+        save_test_data(mock_s3, x_test, y_test)
+        
+        assert mock_s3.put_object.call_count == 2
 
 
 class TestHandler:

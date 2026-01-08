@@ -1,6 +1,5 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MathieuAudibert_local-ml-flow&metric=alert_status&token=9d435cc3c26b9d43458fca3e4d17ed38435ef52f)](https://sonarcloud.io/summary/new_code?id=MathieuAudibert_local-ml-flow)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=MathieuAudibert_local-ml-flow&metric=coverage&token=9d435cc3c26b9d43458fca3e4d17ed38435ef52f)](https://sonarcloud.io/summary/new_code?id=MathieuAudibert_local-ml-flow)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=MathieuAudibert_local-ml-flow&metric=ncloc&token=9d435cc3c26b9d43458fca3e4d17ed38435ef52f)](https://sonarcloud.io/summary/new_code?id=MathieuAudibert_local-ml-flow)
 
 # local-ml-flow
 
@@ -19,12 +18,12 @@ You can find the dataset in `src/config/housing.csv` or on [Kaggle](https://www.
 
 ## Technical Stack
 
-- Local Stack : local AWS/Cloud computing
-- Python : programming langage
-- SonarQube : code quality
-- GitHub Actions : CI/CD
-- Terraform : infrastructre as code
-- Docker : isolate dependencies in a container
+- **Local Stack** : local AWS/Cloud computing
+- **Python** : programming langage
+- **SonarQube** : code quality
+- **GitHub Actions** : CI/CD
+- **Terraform** : infrastructre as code
+- **Docker** : isolate dependencies in a container
 
 ---
 
