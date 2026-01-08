@@ -9,7 +9,7 @@ async def get_result_file(bucket_name: str):
     s3_client = clients["s3"]
         
     try:
-        response = s3_client.get_object(Bucket=bucket_name, Key="result.txt")
+        response = s3_client.get_object(Bucket=bucket_name, Key="score.txt")
         content = response["Body"].read().decode("utf-8")
         return {"content": content}
     except Exception as e:

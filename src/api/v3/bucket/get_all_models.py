@@ -14,7 +14,7 @@ async def get_all_models():
     all_models = []
     for bucket_name in buckets:
         try:
-            objects = s3_client.list_objects_v3(Bucket=bucket_name)
+            objects = s3_client.list_objects_v2(Bucket=bucket_name)
             if 'Contents' in objects:
                 models = [obj['Key'] for obj in objects['Contents']]
                 all_models.extend([{"bucket": bucket_name, "model": model} for model in models])
