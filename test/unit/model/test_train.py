@@ -7,109 +7,75 @@ from src.core.model.train import train
 
 class TestTrain:
     @pytest.fixture
-    def sample_dataset(self):
+    def sample_training_data(self):
         np.random.seed(42)
-        n_samples = 100
-        return pd.DataFrame({
-            "price": np.random.randint(100000, 500000, n_samples),
-            "mainroad": np.random.choice(["1", "0"], n_samples),
-            "guestroom": np.random.choice(["1", "0"], n_samples),
-            "basement": np.random.choice(["1", "0"], n_samples),
-            "hotwaterheating": np.random.choice(["1", "0"], n_samples),
-            "airconditioning": np.random.choice(["1", "0"], n_samples),
-            "prefarea": np.random.choice(["1", "0"], n_samples)
-        })
+        x_train = np.random.rand(80, 6)
+        y_train = np.random.rand(80)
+        return x_train, y_train
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.train_test_split.split")
-    def test_train_returns_linear_regression_model(self, mock_split, mock_get_logger, sample_dataset):
+    def test_train_returns_linear_regression_model(self, mock_get_logger, sample_training_data):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
         
-        x_train = np.random.rand(80, 6)
-        x_test = np.random.rand(20, 6)
-        y_train = np.random.rand(80)
-        y_test = np.random.rand(20)
-        mock_split.return_value = (x_train, x_test, y_train, y_test)
+        x_train, y_train = sample_training_data
         
-        result = train(sample_dataset)
+        result = train(x_train=x_train, y_train=y_train)
         
         assert isinstance(result, LinearRegression)
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.train_test_split.split")
-    def test_train_calls_split(self, mock_split, mock_get_logger, sample_dataset):
+    def test_train_logs_info_messages(self, mock_get_logger, sample_training_data):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
         
-        x_train = np.random.rand(80, 6)
-        x_test = np.random.rand(20, 6)
-        y_train = np.random.rand(80)
-        y_test = np.random.rand(20)
-        mock_split.return_value = (x_train, x_test, y_train, y_test)
+        x_train, y_train = sample_training_data
         
-        train(sample_dataset)
-        
-        mock_split.assert_called_once_with(dataset=sample_dataset)
-
-    @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.train_test_split.split")
-    def test_train_logs_info_messages(self, mock_split, mock_get_logger, sample_dataset):
-        mock_logger = MagicMock()
-        mock_get_logger.return_value = mock_logger
-        
-        x_train = np.random.rand(80, 6)
-        x_test = np.random.rand(20, 6)
-        y_train = np.random.rand(80)
-        y_test = np.random.rand(20)
-        mock_split.return_value = (x_train, x_test, y_train, y_test)
-        
-        train(sample_dataset)
+        train(x_train=x_train, y_train=y_train)
         
         mock_get_logger.assert_called_once_with("train model")
         assert mock_logger.info.call_count >= 2
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.train_test_split.split")
-    def test_train_handles_exception(self, mock_split, mock_get_logger, sample_dataset):
+    def test_train_handles_exception(self, mock_get_logger):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
-        mock_split.side_effect = Exception("Split error")
         
-        with pytest.raises(Exception) as exc_info:
-            train(sample_dataset)
+        # Invalid data that will cause fit to fail
+        x_train = None
+        y_train = None
         
-        assert "Split error" in str(exc_info.value)
+        with pytest.raises(Exception):
+            train(x_train=x_train, y_train=y_train)
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.train_test_split.split")
-    def test_train_model_is_fitted(self, mock_split, mock_get_logger, sample_dataset):
+    def test_train_model_is_fitted(self, mock_get_logger, sample_training_data):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
         
-        np.random.seed(42)
-        x_train = np.random.rand(80, 6)
-        x_test = np.random.rand(20, 6)
-        y_train = np.random.rand(80)
-        y_test = np.random.rand(20)
-        mock_split.return_value = (x_train, x_test, y_train, y_test)
+        x_train, y_train = sample_training_data
         
-        model = train(sample_dataset)
+        model = train(x_train=x_train, y_train=y_train)
         
         # Check that model has been fitted by verifying it has coefficients
         assert hasattr(model, 'coef_')
         assert len(model.coef_) == 6
 
     @patch("src.core.model.train.get_logger")
-    @patch("src.core.model.train.train_test_split.split")
-    def test_train_logs_error_on_fit_failure(self, mock_split, mock_get_logger, sample_dataset):
+    @patch("src.core.model.train.LinearRegression")
+    def test_train_logs_error_on_fit_failure(self, mock_linear_regression, mock_get_logger):
         mock_logger = MagicMock()
         mock_get_logger.return_value = mock_logger
         
-        # Return invalid data that will cause fit to fail
-        mock_split.return_value = (None, None, None, None)
+        # Mock LinearRegression to raise exception on fit
+        mock_model = MagicMock()
+        mock_model.fit.side_effect = Exception("Fit error")
+        mock_linear_regression.return_value = mock_model
+        
+        x_train = np.random.rand(80, 6)
+        y_train = np.random.rand(80)
         
         with pytest.raises(Exception):
-            train(sample_dataset)
+            train(x_train=x_train, y_train=y_train)
         
         mock_logger.error.assert_called_once()

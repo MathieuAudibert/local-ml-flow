@@ -24,7 +24,7 @@ class TestIngest:
         mock_s3 = MagicMock()
         mock_s3.get_object.return_value = {"Body": mock_csv_content}
         mock_config.return_value = {"s3": mock_s3, "lambdas": MagicMock()}
-        mock_clean_df.return_value = pd.DataFrame()
+        mock_clean_df.return_value = pd.DataFrame({"price": [100], "mainroad": [0], "guestroom": [0], "basement": [0], "hotwaterheating": [0], "airconditioning": [0], "prefarea": [0]})
         mock_train.return_value = MagicMock()
         
         ingest()
@@ -42,7 +42,7 @@ class TestIngest:
         mock_s3 = MagicMock()
         mock_s3.get_object.return_value = {"Body": mock_csv_content}
         mock_config.return_value = {"s3": mock_s3, "lambdas": MagicMock()}
-        mock_clean_df.return_value = pd.DataFrame()
+        mock_clean_df.return_value = pd.DataFrame({"price": [100], "mainroad": [0], "guestroom": [0], "basement": [0], "hotwaterheating": [0], "airconditioning": [0], "prefarea": [0]})
         mock_train.return_value = MagicMock()
         
         ingest()
@@ -60,7 +60,7 @@ class TestIngest:
         mock_s3 = MagicMock()
         mock_s3.get_object.return_value = {"Body": mock_csv_content}
         mock_config.return_value = {"s3": mock_s3, "lambdas": MagicMock()}
-        mock_clean_df.return_value = pd.DataFrame()
+        mock_clean_df.return_value = pd.DataFrame({"price": [100], "mainroad": [0], "guestroom": [0], "basement": [0], "hotwaterheating": [0], "airconditioning": [0], "prefarea": [0]})
         mock_train.return_value = MagicMock()
         
         ingest()
@@ -78,7 +78,7 @@ class TestIngest:
         mock_s3 = MagicMock()
         mock_s3.get_object.return_value = {"Body": mock_csv_content}
         mock_config.return_value = {"s3": mock_s3, "lambdas": MagicMock()}
-        cleaned_df = pd.DataFrame()
+        cleaned_df = pd.DataFrame({"price": [100], "mainroad": [0], "guestroom": [0], "basement": [0], "hotwaterheating": [0], "airconditioning": [0], "prefarea": [0]})
         mock_clean_df.return_value = cleaned_df
         mock_train.return_value = MagicMock()
         
@@ -97,7 +97,7 @@ class TestIngest:
         mock_s3 = MagicMock()
         mock_s3.get_object.return_value = {"Body": mock_csv_content}
         mock_config.return_value = {"s3": mock_s3, "lambdas": MagicMock()}
-        mock_clean_df.return_value = pd.DataFrame()
+        mock_clean_df.return_value = pd.DataFrame({"price": [100], "mainroad": [0], "guestroom": [0], "basement": [0], "hotwaterheating": [0], "airconditioning": [0], "prefarea": [0]})
         mock_model = MagicMock()
         mock_train.return_value = mock_model
         
@@ -116,7 +116,7 @@ class TestIngest:
         mock_s3 = MagicMock()
         mock_s3.get_object.return_value = {"Body": mock_csv_content}
         mock_config.return_value = {"s3": mock_s3, "lambdas": MagicMock()}
-        mock_clean_df.return_value = pd.DataFrame()
+        mock_clean_df.return_value = pd.DataFrame({"price": [100], "mainroad": [0], "guestroom": [0], "basement": [0], "hotwaterheating": [0], "airconditioning": [0], "prefarea": [0]})
         mock_train.return_value = MagicMock()
         
         result = ingest()
@@ -134,7 +134,7 @@ class TestIngest:
         mock_s3 = MagicMock()
         mock_s3.get_object.return_value = {"Body": mock_csv_content}
         mock_config.return_value = {"s3": mock_s3, "lambdas": MagicMock()}
-        mock_clean_df.return_value = pd.DataFrame()
+        mock_clean_df.return_value = pd.DataFrame({"price": [100], "mainroad": [0], "guestroom": [0], "basement": [0], "hotwaterheating": [0], "airconditioning": [0], "prefarea": [0]})
         mock_train.return_value = MagicMock()
         
         ingest()
