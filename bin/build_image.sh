@@ -21,16 +21,9 @@ docker run --rm --entrypoint bash -v "/${PWD}:/project" public.ecr.aws/lambda/py
     cd /tmp/package
     
     echo 'removing test files and reducing size...'
-    find . -type d -path '*/tests' -exec rm -rf {} + 2>/dev/null || true
-    find . -type d -path '*/test' -exec rm -rf {} + 2>/dev/null || true
     find . -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
     find . -type d -name '*.dist-info' -exec rm -rf {} + 2>/dev/null || true
-    
-    rm -rf numpy/*/tests 2>/dev/null || true
-    rm -rf numpy/_core/tests 2>/dev/null || true
-    rm -rf pandas/tests 2>/dev/null || true
-    rm -rf sklearn/*/tests 2>/dev/null || true
-    
+        
     find . -name '*.pyc' -delete
     find . -name '*.pyo' -delete
     find . -name '*.pyd' -delete

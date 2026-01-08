@@ -8,7 +8,7 @@ def config() -> dict:
     load_dotenv()
     logger.info("loaded dotenv, attempting to create AWS clients")
 
-    endpoint = os.getenv("endpoint_url")
+    endpoint = os.getenv("AWS_ENDPOINT_URL") or os.getenv("endpoint_url")
     clients={}
 
     try:
