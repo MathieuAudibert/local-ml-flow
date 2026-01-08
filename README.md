@@ -114,7 +114,7 @@ graph TB
         GH --> Sonar[SonarCloud Analysis]
         Sonar --> Build[Build Docker Image]
         Build --> Promote{Main Branch?}
-        Promote -->|Yes| GHCR[Push to ghcr.io]
+        Promote -->|Yes| GHCR[Push to ghcr.io (github binary artifact hoster)]
         Promote -->|No| End1[Skip Promote]
     end
     
