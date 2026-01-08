@@ -66,7 +66,7 @@ graph LR;
     A[Push/PR] --> B[SonarCloud];
     B --> C[Build Image];
     C --> D{Main?};
-    D -->|Yes| E[Push to ghcr.io];
+    D -->|Yes| E[Push to ghcr.io, github artifactory hoster];
     D -->|No| F[End];
     E --> F;
 ```
@@ -113,7 +113,7 @@ graph TB
         GH --> Sonar[SonarCloud Analysis]
         Sonar --> Build[Build Docker Image]
         Build --> Promote{Main Branch?}
-        Promote -->|Yes| GHCR[Push to ghcr.io (github binary artifact hoster)]
+        Promote -->|Yes| GHCR[Push to ghcr.io]
         Promote -->|No| End1[Skip Promote]
     end
     
